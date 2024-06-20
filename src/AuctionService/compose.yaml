@@ -1,0 +1,13 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:13.15
+    environment:
+      - POSTGRES_PASSWORD=resetplease
+    ports:
+     - 5432:5432
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+
+volumes:
+  pgdata: 
