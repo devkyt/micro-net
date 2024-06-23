@@ -1,6 +1,6 @@
 using MongoDB.Entities;
 
-namespace SearchService;
+namespace SearchService.Models;
 
 public class Item : Entity
 {

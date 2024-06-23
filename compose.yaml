@@ -11,14 +11,14 @@ services:
 
   mongo:
     container_name: mongo
-    image: mongo:8.0.0-rc5-nanoserver
+    image: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=jake
-      - MONGO_INITDB_ROOT_PASSWROD=dancebaby
+      - MONGO_INITDB_ROOT_PASSWORD=dancebaby
     ports:
       - "27017:27017"
     volumes:
-      - "mongodata:var/lib/mongodb/data"
+      - "mongodata:/var/lib/mongodb/data"
 
 volumes:
   pgdata: 

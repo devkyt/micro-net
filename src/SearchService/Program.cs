@@ -1,8 +1,13 @@
+
+using SearchService.Data;
+using SearchService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient<AuctionServiceHttpClient>();
 
 var app = builder.Build();
 
@@ -12,14 +17,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
-await DB.InitAsync("SearchDB", MongoClientSettings
-    .FromConnectionString(builder.Configuration.GetConnectionString("MongoDBConnection")));
-
-await DB.Index<Item>()
-    .Key(x => x.Type, KeyType.Text)
-    .Key(x => x.Model, KeyType.Text)
-    .Key(x => x.Condition, KeyType.Text)
-    .CreateAsync();
+try
+{
+    await DbInitializer.InitDb(app);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
 
 app.Run();
