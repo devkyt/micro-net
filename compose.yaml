@@ -2,6 +2,7 @@ services:
   postgres:
     container_name: postgres
     image: postgres:13.15
+    pull_policy: if_not_present
     environment:
       - POSTGRES_PASSWORD=resetplease
     ports:
@@ -12,6 +13,7 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    pull_policy: if_not_present
     environment:
       - MONGO_INITDB_ROOT_USERNAME=jake
       - MONGO_INITDB_ROOT_PASSWORD=dancebaby
@@ -20,6 +22,14 @@ services:
     volumes:
       - "mongodata:/var/lib/mongodb/data"
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    pull_policy: if_not_present
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    
 volumes:
   pgdata: 
   mongodata:
