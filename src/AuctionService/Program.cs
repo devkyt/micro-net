@@ -12,8 +12,19 @@ builder.Services.AddDbContext<AuctionDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Connect to RabbitMq 
 builder.Services.AddMassTransit(x => 
-{
+{   
+    x.AddEntityFrameworkOutbox<AuctionDbContext>(options => 
+    {
+        options.QueryDelay = TimeSpan.FromSeconds(10);
+
+        options.UsePostgres();
+
+        options.UseBusOutbox();
+    });
+
     x.UsingRabbitMq((context, cfg) => 
     {
         cfg.ConfigureEndpoints(context);
