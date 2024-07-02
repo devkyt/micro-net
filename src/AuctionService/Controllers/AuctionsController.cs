@@ -86,6 +86,8 @@ public class AuctionsController : ControllerBase
        auction.Item.Year = updateAuctionDto.Year ?? auction.Item.Year;
        auction.Item.Condition = updateAuctionDto.Condition ?? auction.Item.Condition;
 
+       await _publishEndpoint.Publish(_mapper.Map<AuctionUpdated>(auction));
+
        var result = await _context.SaveChangesAsync() > 0;
 
        if (!result) return BadRequest("Could not save changes");
@@ -103,6 +105,8 @@ public class AuctionsController : ControllerBase
         // TO: check seller equal to username
 
         _context.Auctions.Remove(auction);
+
+        await _publishEndpoint.Publish<AuctionDeleted>(new { Id = auction.Id.ToString() });
 
         var result = await _context.SaveChangesAsync() > 0;
 
