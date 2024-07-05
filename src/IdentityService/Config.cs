@@ -14,7 +14,7 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("onGuard", "Auction app full access"),
+            new ApiScope("microNet", "Auction app full access"),
         };
 
     public static IEnumerable<Client> Clients =>
@@ -24,7 +24,7 @@ public static class Config
            {
                 ClientId = "indi",
                 ClientName = "Indiana",
-                AllowedScopes = {"openid", "profile", "onGuard"},
+                AllowedScopes = {"openid", "profile", "microNet"},
                 RedirectUris = {""},
                 ClientSecrets = new[] {new Secret("SwordFish".Sha256())},
                 AllowedGrantTypes = {GrantType.ResourceOwnerPassword}
